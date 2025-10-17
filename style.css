@@ -56,6 +56,6 @@
 
 @media (min-width: 600px) {
     #mobile-controls {
-        display: none; /* Cacher sur desktop */
+        display: flex !important; /* Forcer l'affichage pour vérifier */
     }
 }
