@@ -59,10 +59,10 @@ window.addEventListener('DOMContentLoaded', () => {
     };
 
     // Affiche contrôles mobiles si mobile détecté
-    if (isMobile()) {
+    //if (isMobile()) {
         const mobileControls = document.getElementById('mobile-controls');
         if (mobileControls) mobileControls.classList.remove('hidden');
-    }
+    //}
 });
 
 document.addEventListener('keydown', e => keys[e.key] = true);
