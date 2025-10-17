@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Mini Jeu WS</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Applique un fond noir à toute la page */
+        body {
+            background-color: black; /* Couleur de fond */
+            #messages{color: white;}      
+        }
+    </style>
+</head>
+<body>
+
+<div id="login">
+    <h2>Entrez votre pseudo</h2>
+    <input type="text" id="usernameInput" placeholder="Pseudo">
+    <button id="startButton">Jouer</button>
+</div>
+
+<canvas id="game" width="800" height="600" class="hidden"></canvas>
+
+<div id="mobile-controls" class="hidden">
+    <button id="upBtn">↑</button>
+    <button id="leftBtn">←</button>
+    <button id="rightBtn">→</button>
+    <button id="downBtn">↓</button>
+    <button id="talkBtn">E</button>
+</div>
+
+<div id="chatbox" class="hidden">
+    <div id="messages"></div>
+    <input id="chatinput" placeholder="Message..." autocomplete="off">
+</div>
+
+<script src="client.js"></script>
+</body>
+</html>

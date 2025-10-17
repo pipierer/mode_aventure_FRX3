@@ -1,0 +1,61 @@
+#login {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #333;
+    padding: 20px;
+    color: white;
+    border-radius: 10px;
+    text-align: center;
+}
+
+#login input {
+    padding: 8px;
+    width: 200px;
+    margin-bottom: 10px;
+}
+
+#login button {
+    padding: 8px 16px;
+    background: #0084ff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+#mobile-controls {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 1000;
+}
+
+#mobile-controls button {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    border-radius: 8px;
+    background-color: #333;
+    color: white;
+    border: none;
+    opacity: 0.8;
+    user-select: none;
+}
+
+#mobile-controls button:active {
+    background-color: #555;
+}
+
+@media (min-width: 600px) {
+    #mobile-controls {
+        display: none; /* Cacher sur desktop */
+    }
+}
