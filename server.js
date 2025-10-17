@@ -1,32 +1,33 @@
 const http = require('http');
 const fs = require('fs');
+const path = require('path');
 const WebSocket = require('ws');
 
 const server = http.createServer((req, res) => {
-    if (req.url === '/') {
-        fs.readFile('index.html', (err, data) => {
-            res.writeHead(200, {'Content-Type': 'text/html'});
+    let file = req.url === '/' ? 'index.html' : req.url.substring(1);
+    const ext = path.extname(file);
+    const contentTypes = {
+        '.html': 'text/html',
+        '.js': 'application/javascript',
+        '.css': 'text/css'
+    };
+
+    const filePath = path.join(__dirname, file);
+    fs.readFile(filePath, (err, data) => {
+        if (err) {
+            res.writeHead(404);
+            res.end('404 Not Found');
+        } else {
+            res.writeHead(200, { 'Content-Type': contentTypes[ext] || 'text/plain' });
             res.end(data);
-        });
-    } else if (req.url === '/client.js') {
-        fs.readFile('client.js', (err, data) => {
-            res.writeHead(200, {'Content-Type': 'application/javascript'});
-            res.end(data);
-        });
-    } else if (req.url === '/style.css') {
-        fs.readFile('style.css', (err, data) => {
-            res.writeHead(200, {'Content-Type': 'text/css'});
-            res.end(data);
-        });
-    } else {
-        res.writeHead(404);
-        res.end();
-    }
+        }
+    });
 });
 
+// WebSocket setup
 const wss = new WebSocket.Server({ server });
 
-let clients = new Map(); // WebSocket => { id, username, x, y }
+let clients = new Map(); // ws => { id, username, x, y }
 
 function broadcastPlayers() {
     const players = [...clients.values()];
@@ -39,13 +40,8 @@ function broadcastPlayers() {
 }
 
 wss.on('connection', (ws) => {
-    const id = Math.random().toString(36).substr(2, 9);
-    let player = {
-        id,
-        username: null,
-        x: Math.random() * 500,
-        y: Math.random() * 500
-    };
+    const id = Math.random().toString(36).substring(2, 9);
+    const player = { id, username: null, x: Math.random() * 500, y: Math.random() * 500 };
 
     ws.on('message', (message) => {
         try {
@@ -53,7 +49,7 @@ wss.on('connection', (ws) => {
 
             switch (data.type) {
                 case 'set-username':
-                    player.username = data.username.substring(0, 20); // Limite à 20 caractères
+                    player.username = data.username.substring(0, 20);
                     clients.set(ws, player);
                     ws.send(JSON.stringify({ type: 'init', id: player.id, username: player.username }));
                     broadcastPlayers();
@@ -74,10 +70,9 @@ wss.on('connection', (ws) => {
                         type: 'chat',
                         from: sender.username,
                         to: data.to,
-                        message: data.message.substring(0, 200) // Limite de message
+                        message: data.message.substring(0, 200)
                     };
 
-                    // Envoi uniquement au destinataire
                     for (const [client, p] of clients.entries()) {
                         if (p.id === data.to && client.readyState === WebSocket.OPEN) {
                             client.send(JSON.stringify(messageData));
@@ -86,7 +81,7 @@ wss.on('connection', (ws) => {
                     break;
             }
         } catch (err) {
-            console.error('Erreur de traitement du message WebSocket:', err);
+            console.error('Erreur WebSocket:', err);
         }
     });
 
@@ -96,6 +91,8 @@ wss.on('connection', (ws) => {
     });
 });
 
-server.listen(3000, () => {
-    console.log('Serveur démarré sur http://localhost:3000');
+// Render requires using process.env.PORT
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+    console.log(`Serveur démarré sur http://localhost:${PORT}`);
 });

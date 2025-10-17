@@ -16,7 +16,7 @@ function startGame(username) {
     document.getElementById('login').classList.add('hidden');
     canvas.classList.remove('hidden');
 
-    ws = new WebSocket(`ws://${location.host}`);
+    ws = new WebSocket(`wss://${location.host}`);
 
     ws.onopen = () => {
         ws.send(JSON.stringify({ type: 'set-username', username }));
