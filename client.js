@@ -6,7 +6,8 @@ let players = [];
 let player = null;
 let chatTarget = null;
 let ws;
-
+//quand la page sera indexer il faut remettre la popup juste en dessous⤵️
+//alert("Bienvenue dans Mode aventure FRX3, le jeu multijoueur en ligne ! Pour les utilisateurs PC, utilisez les flèches pour vous déplacer et 'E' pour discuter avec les autres joueurs proches. Amusez-vous bien !");
 const chatBox = document.getElementById('chatbox');
 const chatInput = document.getElementById('chatinput');
 const messages = document.getElementById('messages');
