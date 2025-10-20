@@ -2,7 +2,8 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Mini Jeu WS</title>
+    <title>Mode adventure FRX3</title>
+    <meta name="description" content="Mode Adventure FRX3 : jeu multijoueur gratuit en ligne. Entrez un pseudo et explorez un monde fun et social. Rejoignez notre communauté sur FRX3.">
     <link rel="stylesheet" href="style.css">
     <style>
         /* Rendre la page et le canvas plein écran */
@@ -11,9 +12,7 @@
             margin: 0;
         }
         body {
-            background-image: url('map1.jpg');
-            background-position: center;
-            background-size: cover;
+            background-color: black;
         }
 
         /* Canvas plein écran */
@@ -62,9 +61,10 @@
 <body>
 
 <div id="login">
-    <h2>Entrez votre pseudo</h2>
-    <input type="text" id="usernameInput" placeholder="Pseudo">
-    <button id="startButton">Jouer</button>
+    <h2>Entrez votre pseudo (Bande de goats)</h2>
+    <input type="text" id="usernameInput" placeholder="Pseudo il est definitif faite attention" autocomplete="on">
+    <button id="startButton">Jouer (Vous ètes des pro.)</button>
+    <p style="color:#5d6ada">Rejoignez la communotée FRX3 sur toutes nos plateforme et rejoignez "https://is.gd/chatfrx3" demandez a aller dans le groupe NewUsers vous etes les bien venu je vous tiendrez au courant de toutes les nouvelles versions et je vous proposerez si vous avez ma confiance a etre admin venez en masse ! Ce site n'est pas terminé une nouvelle version pour mi novembre maximum vous ne serez pas dessu il y aura des skins pour révéler comment vous êtes réelement pour votre plus grand plaisir. N'ésitez pas a partager ce site a vos amis ça nous encourage et nous aide Merci.</p>
 </div>
 
 <!-- Canvas : taille gérée par CSS/JS -->
@@ -80,7 +80,7 @@
 
 <div id="chatbox" class="hidden">
     <div id="messages"></div>
-    <input id="chatinput" placeholder="Message..." autocomplete="off">
+    <input id="chatinput" placeholder="Message Attention il faut être polit " autocomplete="on">
 </div>
 
 <script>
