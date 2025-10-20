@@ -108,8 +108,9 @@ const server = http.createServer((req, res) => {
     if (req.url === '/') {
         file = 'index.html';
     } else if (req.url === '/sitemap.xml') {
-        // Serve sitemap.xml
         file = 'sitemap.xml';
+    } else if (req.url === '/google0b409c11e754accc.html') {
+        file = 'google0b409c11e754accc.html';
     } else {
         file = req.url.substring(1);
     }

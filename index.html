@@ -5,11 +5,58 @@
     <title>Mini Jeu WS</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Applique un fond noir à toute la page */
-        body {
-            background-color: black; /* Couleur de fond */
-            #messages{color: white;}      
+        /* Rendre la page et le canvas plein écran */
+        html, body {
+            height: 100%;
+            margin: 0;
         }
+        body {
+            background-image: url('map1.jpg');
+            background-position: center;
+            background-size: cover;
+        }
+
+        /* Canvas plein écran */
+        canvas#game {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: block;
+            z-index: 0;
+        }
+
+        /* UI au-dessus du canvas */
+        #login, #chatbox {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Contrôles mobiles : fixés en bas-centre (comme avant) */
+        #mobile-controls {
+            position: fixed;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 20;
+            touch-action: none;
+        }
+
+        #mobile-controls button {
+            width: 54px;
+            height: 54px;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255,255,255,0.85);
+            font-size: 20px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+        }
+
+        /* Couleur des messages */
+        #messages { color: rgb(255, 255, 255); }
     </style>
 </head>
 <body>
@@ -20,7 +67,8 @@
     <button id="startButton">Jouer</button>
 </div>
 
-<canvas id="game" width="800" height="600" class="hidden"></canvas>
+<!-- Canvas : taille gérée par CSS/JS -->
+<canvas id="game" class="hidden"></canvas>
 
 <div id="mobile-controls">
     <button id="upBtn">↑</button>
@@ -34,6 +82,31 @@
     <div id="messages"></div>
     <input id="chatinput" placeholder="Message..." autocomplete="off">
 </div>
+
+<script>
+// Redimensionne le canvas en pixels réels et gère le resize
+(function(){
+  function resizeCanvas(){
+    const canvas = document.getElementById('game');
+    if (!canvas) return;
+    const dpr = window.devicePixelRatio || 1;
+    const width = Math.max(1, Math.floor(window.innerWidth * dpr));
+    const height = Math.max(1, Math.floor(window.innerHeight * dpr));
+    canvas.width = width;
+    canvas.height = height;
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+    const ctx = canvas.getContext('2d');
+    if (ctx && typeof ctx.setTransform === 'function') {
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+  }
+  window.addEventListener('resize', resizeCanvas);
+  window.addEventListener('orientationchange', resizeCanvas);
+  // appeler immédiatement
+  resizeCanvas();
+})();
+</script>
 
 <script src="client.js"></script>
 </body>
